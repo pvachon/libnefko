@@ -1,0 +1,5 @@
+*.o
+*.so
+tags
+*.swp
+test/ghetto_list
