@@ -178,6 +178,8 @@ static NEF_STATUS nef_populate_image_info(nef_t *nef, nef_image_t *img)
         img->type == NEF_IMAGE_REDUCED ? "thumbnail" : "full-resolution",
         (unsigned)img->compression, img->photo_interp);
 
+    img->nef_file = nef;
+
     return NEF_OK;
 }
 

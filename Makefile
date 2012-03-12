@@ -1,8 +1,9 @@
 OBJS = nefko_file.o     \
        nefko_image.o    \
-       nefko_decrypt.o
+       nefko_decrypt.o \
+       nefko_huff.o
 
-GHETTO_PATH=../ghetto
+GHETTO_PATH=../libghetto
 GHETTO_INCLUDE=-I$(GHETTO_PATH)
 GHETTO_LINK=-L$(GHETTO_PATH) -lghetto
 

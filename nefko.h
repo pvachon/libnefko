@@ -32,7 +32,12 @@ typedef int NEF_STATUS;
 #define NEF_RANGE_ERROR     0x5     /* Value is out of range */
 #define NEF_FAILURE         0x6     /* An unspecified failure occurred */
 
+/* Some error codes, like the following, are "internal" to libnefko. */
+#define NEF_INT_ERROR(x)            ((x) | 0x80000000ul)
+#define NEF_MN_WRONG_SIZE   NEF_INT_ERROR(1)    /* Makernote data is wrong size for model */
+
 /* Image sample formats */
+#define NEF_DATATYPE_UNKNOWN        0 /* unknown, probably not an image IFD */
 #define NEF_DATATYPE_UINT           1 /* Unsigned integer */
 
 /* Open an NEF image */

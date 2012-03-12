@@ -27,6 +27,7 @@ struct nef_image_reader;
 
 struct nef_image {
     tiff_ifd_t *ifd;
+    struct nef *nef_file;
     unsigned type;
     unsigned width;
     unsigned height;
@@ -40,27 +41,33 @@ struct nef_image {
     void *reader_state;
 };
 
+struct nef_huff_leaf {
+    struct nef_huff_leaf *branch[2];
+    unsigned leaf;
+};
+
 struct nef_image_reader {
     /* A human-readable name for the image type */
     const char *format_name;
 
     /* Determine if the given nef_image is an image type supported by this
      * nef_image_reader */
-    int (*can_open)(struct nef_image *image);
+    NEF_STATUS (*can_open)(struct nef_image *image);
 
     /* Initialize nef_image's reader_state member from the IFD contents */
-    void (*init_state)(struct nef_image *image, tiff_ifd_t *makernote);
+    NEF_STATUS (*init_state)(struct nef_image *image, tiff_ifd_t *makernote);
 
     /* Read a tile of imagery */
-    void (*read_image_tile)(struct nef_image *image,
+    NEF_STATUS (*read_image_tile)(struct nef_image *image,
         unsigned x_off, unsigned y_off, unsigned w, unsigned h,
         void *buf);
 
     /* Get the tile size for use when reading */
-    void (*image_tile_size)(struct nef_image *image);
+    NEF_STATUS (*image_tile_size)(struct nef_image *image,
+                                  unsigned *w, unsigned *h);
 
     /* Destroy the reader_state in the given nef_image */
-    void (*clean_state)(struct nef_image *image);
+    NEF_STATUS (*clean_state)(struct nef_image *image);
 };
 
 #ifdef _DEBUG
